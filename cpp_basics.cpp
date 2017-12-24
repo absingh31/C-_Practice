@@ -26,10 +26,10 @@ int main()
 	int x, y;
 	char name[100];
 
-	string s;
-	cin>>s;
-	reverse(s.begin(), s.end());
-	cout<<s<<endl;
+	// string s;
+	// cin>>s;
+	// reverse(s.begin(), s.end());
+	// cout<<s<<endl;
 
 	// int *a, n, num, index;
 	// cin>>n>>num>>index;

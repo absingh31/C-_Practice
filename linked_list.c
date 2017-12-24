@@ -32,13 +32,18 @@ int main()
 	head->data = 1;
 	head->next = second;
 
-	second->data = 2;
+	second->data = 211;
 	second->next = third;
 
 	third->data = 3;
 	third->next = NULL;
 
 	traversal(head);
+
+	free(head);
+	free(second);
+	free(third);
+
 
 	return 0;
 } 
