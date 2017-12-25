@@ -19,6 +19,37 @@ void traversal(struct Node *n)
 	}
 }
 
+void push_head(struct Node **head_ref, int new_data)
+{
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+	new_node->data = new_data;
+	new_node->next = *head_ref;
+	*head_ref = new_node;
+}
+
+void append(struct Node **head_ref, int new_data)
+{
+	struct Node *last = (struct Node*)malloc(sizeof(struct Node));
+
+	last->data = new_data;
+	last->next = NULL;
+
+	struct Node *traverse = (struct Node*)malloc(sizeof(struct Node));
+	traverse = *head_ref;
+
+	if (*head_ref == NULL)
+	{	
+		*head_ref = last;
+		return;
+	}
+
+	while(traverse->next != NULL)
+		traverse = traverse->next;
+
+	traverse->next = last;
+	return;
+}
+
 int main()
 {
 	struct Node* head = NULL;
@@ -38,6 +69,8 @@ int main()
 	third->data = 3;
 	third->next = NULL;
 
+	push_head(&head, 100);
+	append(&head, 200);
 	traversal(head);
 
 	free(head);
