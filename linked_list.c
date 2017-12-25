@@ -50,6 +50,46 @@ void append(struct Node **head_ref, int new_data)
 	return;
 }
 
+void insert_after(struct Node* prev_node, int new_data)
+{
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+
+	new_node->data = new_data;
+	new_node->next = prev_node->next;
+	prev_node->next = new_node;
+
+	return;
+}
+
+void delete_node(struct Node **head_ref, int position)
+{
+	int count=0;
+	struct Node *traverse = (struct Node*)malloc(sizeof(struct Node));
+	traverse = *head_ref;
+
+	if(position == 0)
+	{
+		*head_ref = traverse->next;
+		free(traverse);
+	}
+
+	while(count != position-2)
+	{
+		traverse = traverse->next;
+		count++;
+	}
+
+	if(traverse->next == NULL)
+	{
+		printf("ERROR!! Position given is more than dimension of the linked list\n");
+		exit(0);
+	}
+
+	traverse->next = traverse->next->next;
+
+	return;
+}
+
 int main()
 {
 	struct Node* head = NULL;
@@ -71,12 +111,14 @@ int main()
 
 	push_head(&head, 100);
 	append(&head, 200);
+	insert_after(head->next, 300);
+	delete_node(&head, 7);
 	traversal(head);
 
 	free(head);
 	free(second);
 	free(third);
-
+	
 
 	return 0;
 } 
