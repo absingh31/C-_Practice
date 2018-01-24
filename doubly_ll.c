@@ -20,4 +20,9 @@ void push(struct Node **head_ref, int new_data)
 
 	(*head_ref) = new_node;
 
+	return;
 }
+
+
+
+
