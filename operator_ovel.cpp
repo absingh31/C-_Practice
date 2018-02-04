@@ -15,20 +15,51 @@ class Number
 		{
 			cout<<"a is "<<a<<" b is "<<b<<endl;
 		}
-		Number operator +(Number nu)
+		
+		Number operator -()
 		{
 			Number p;
-			p.a = a + nu.a;
-			p.b = b + nu.b;
+			p.a = (-1)*a;
+			p.b = (-1)*b;
 			return p;
 		}
+		
+		Number operator +(Number& n)
+		{
+			Number temp;
+			temp.a = n.a + a;
+			temp.b = n.b + b;
+			return temp;
+		}
+		
+		Number operator ++()
+		{
+			Number temp;
+			temp.a = ++a;
+			temp.b = ++b;
+			return temp;
+		}
+		
+		Number operator ++(int)
+		{
+			Number temp;
+			temp.a = a++;
+			temp.b = b++;
+			return temp;
+		}
+
 };
 
 int main()
 {
-	Number n1,n2,n3;
+	Number n1,n2,neg,incopr,add;
 	n1.setData(4,5);
 	n2.setData(4,5);
-	n3 = n1 + (n2);
-	n3.showData();
+	neg = n1.operator-();     // IN BINARY OBJ CALLER IS ALWAYS ON THE LEFT
+	neg.showData();
+	incopr = n1++;
+	incopr.showData();
+	n1.showData();
+	add = n1 + n2;
+	add.showData();
 }
