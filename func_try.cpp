@@ -1,28 +1,25 @@
-#include<iostream>
+#include <iostream>
 
 using namespace std;
 
-int x;
-
-// bool ise()
-// {
-// 	if(x==0)
-// 		return true;
-// 	else
-// 		return false;
-// }
-
-
+void swap(int &x, int &y)
+{
+	int z = x;
+	x=y;
+	y=z;
+}
 
 int main()
 {
-	// x++;
-	// bool a=ise();
-	// cout<<a<<endl;
+	int a,b;
+	cout<<"Enter the values : "<<endl;
+	cin>>a>>b;
 
-	double a=19.00;
-	int b= (int)a;
-	if(a-b==0.0)
-		cout<<b<<endl;
+	cout<<"Numbers before swap : "<<a<<" and "<<b<<endl;
+
+	swap(a,b);
+
+	cout<<"Numbers after swap : "<<a<<" and "<<b<<endl;
+
 	return 0;
 }
