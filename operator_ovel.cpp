@@ -47,8 +47,16 @@ class Number
 			temp.b = b++;
 			return temp;
 		}
+		istream 
+};
+
+
+class complex
+{
+	int real, imag;
 
 };
+
 
 int main()
 {
