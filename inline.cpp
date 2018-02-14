@@ -47,7 +47,7 @@ inline void Numbers::put()
 	cout<<"Addition : "<<add<<endl;
 	cout<<"Substraction : "<<sub<<endl;
 	cout<<"Multiplication : "<<mul<<endl;
-	cout<<"Division : "<<div<<endl
+	cout<<"Division : "<<div<<endl;
 }
 
 int main()

@@ -17,7 +17,7 @@ while (playAgain == 'y'){
 
     getline (cin, word, '\n');
 
-    cout << "\nThe binary value for " << word << " is \n";
+    cout << "\nThe binary value for " << word << " is  "<<endl;
 
     for (unsigned int wordPosition = 0; wordPosition < word.size(); ++wordPosition){
 
@@ -34,9 +34,9 @@ while (playAgain == 'y'){
     cin >> playAgain;
 
     if (playAgain != 'y'){
-        cout << "\n\nExiting program.";
-        playAgain = 'n';
-        }
+        cout << "\n\nExiting program."<<endl;
+        playAgain = 'n'
+;        }
         cin.ignore();
 }
 
