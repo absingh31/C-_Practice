@@ -31,7 +31,6 @@ int add(crap c)
 	return x;
 }
 
-
 istream &operator >> (istream &input, crap &co)
 {
 	input>>co.a>>co.b;
