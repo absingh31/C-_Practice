@@ -47,7 +47,18 @@ class Number
 			temp.b = b++;
 			return temp;
 		}
-		istream 
+		istream &operator >> (istream &input, crap &co)
+		{
+			input>>co.a>>co.b;
+			return input;
+		}
+
+		ostream &operator << (ostream &output, crap &co)
+		{
+			output<<"hehe!! this is shit"<<endl;
+			output<<co.a<<co.b<<endl;
+			return output;
+	}	
 };
 
 

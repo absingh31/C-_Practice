@@ -1,86 +1,110 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-//I THINK YOU GOTTA HAVE THE STACK DATATYPE, ISN'T IT?
-struct Stack
+struct stack
 {
 	int top;
 	int capacity;
 	int *array;
 };
 
-// FUNCTION TO CREATE NEW STACK AND THEN USE IT FOR YOUR PURPOSE, NOTE THE TYPE IS STRUCT POINTER
-struct Stack* createStack(int capacity)
-{
-	//LET'S FIRST ALLOCATE THE MEMORY THEN THINK ABOUT THE OPERATIONS
-	struct Stack *s1 = (struct Stack*)malloc(sizeof(struct Stack));  
 
-	//INITIALISING STUFFS
+struct stack* create(int cap)
+{
+	struct stack *s1 = (struct stack *)calloc(1, sizeof(struct stack));
 	s1->top = -1;
-	s1->capacity = capacity;
-	s1->array = (int*)malloc((s1->capacity)*sizeof(int));
+	s1->capacity = cap;
+	s1->array = (int*)calloc((s1->capacity), sizeof(int));
 
-	return s1;
+	return s1; 
 }
 
-//CHECK IF THE STACK IS EMPTY, IF YES THEN RETURN TRUE
-bool isEmpty(struct Stack* stack)
+
+bool isEmpty(struct stack *s1)
 {
-	if (stack->top == -1)
+	if(s1->top == -1)
 		return true;
-	else
-		return false;
-}
-
-//CHECK IF THE STACK IS FULL, IF YES THEN RETURN TRUE
-bool isFull(struct Stack *stack)
-{
-	if(stack->top == stack->capacity - 1)
-		return true;
-	else
-		return false;
-}
-
-// PUSH THE GIVEN VALUE INTO STACK IF IT IS NOT FULL
-void push(struct Stack* stack, int number)
-{
-	if(isFull(stack))
-		printf("Stack is full\n");
 	else 
-	{
-		stack->top++;
-		stack->array[stack->top] = number;
-		printf("%d pushed to stack\n", number);
-	}
+		return false;
 }
 
-// POP TOP VALUE FROM THE STACK IF IT IS NOT EMPTY
-void pop(struct Stack *stack)
+bool isFull(struct stack *s1)
 {
-	if(isEmpty(stack))
-		printf("Stack is empty, can't pop .... better luck next time\n");
+	if(s1->top == s1->capacity - 1)
+		return true;
+	else
+		return false;
+}
+
+void push(struct stack *s1, int to_push)
+{
+	if(isFull(s1))
+		printf("Stack is full\n");
 	else
 	{
-		printf("%d popped from stack\n", stack->array[stack->top]);
-		stack->top--;
+		s1->top++;
+		s1->array[s1->top] = to_push;
+		printf("%d pushed into stack\n", s1->array[s1->top]);
 	}
 }
 
-// DO I HAVE TO TELL ABOUT THIS FUNCTION?
+void pop(struct stack *s1)
+{
+	if(isEmpty(s1))
+		printf("Stack is empty\n");
+	else
+	{
+		printf("%d is popped \n", s1->array[s1->top]);
+		s1->top--;
+	}
+}
+
+void display(struct stack *s1)
+{
+	if(isEmpty(s1))
+	{
+		printf("Stack empty\n");
+		exit(0);
+	}
+	for (int i = s1->capacity - 1; i >= 0; --i)
+	{
+		printf("%d\n", s1->array[i]);
+	}
+}
+
+
+void controller(struct stack *s1)
+{
+	printf("\tWelcome to stack controller\n");
+	while(1)
+	{
+		printf("\n\n\t*********Menu**********\n");
+		printf("\tTo push enter 1\n\tTo pop enter 2\n\tTo display enter 3\n\tTo exit enter 4\n");
+		int choice;
+		scanf("%d", &choice);
+		switch(choice)
+		{
+			case 1: printf("Enter the value to be pushed\n");
+					int x;
+					scanf("%d", &x);
+					push(s1, x);
+			case 2: pop(s1);
+			case 3: display(s1);
+			case 4: exit(0);
+			default: printf("Wrong Choice\n");
+		}
+	}	
+}
+
+
 int main()
 {
-	// ONE STACK DECLARED HERE
-	struct Stack *stack = createStack(10);
+	struct stack *s1 = create(10);
 
-	// PERFORMING SOME OPERATIONS
-	push(stack, 12);
-	push(stack, 14);
-	pop(stack);
+	controller(s1);
 
-	// MAKING THE MEMORY THAT WAS ALLOCATED IN HEAP TO BE FREE
-	free(stack);
+	free(s1);
 
 	return 0;
 }
-
