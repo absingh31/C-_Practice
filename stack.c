@@ -63,11 +63,8 @@ void pop(struct stack *s1)
 void display(struct stack *s1)
 {
 	if(isEmpty(s1))
-	{
 		printf("Stack empty\n");
-		exit(0);
-	}
-	for (int i = s1->capacity - 1; i >= 0; --i)
+	for (int i = s1->top; i >= 0; --i)
 	{
 		printf("%d\n", s1->array[i]);
 	}
@@ -89,8 +86,11 @@ void controller(struct stack *s1)
 					int x;
 					scanf("%d", &x);
 					push(s1, x);
+					break;
 			case 2: pop(s1);
+					break;
 			case 3: display(s1);
+					break;
 			case 4: exit(0);
 			default: printf("Wrong Choice\n");
 		}
