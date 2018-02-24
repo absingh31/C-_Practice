@@ -9,7 +9,6 @@ struct queue
 	int *array;
 };
 
-
 struct queue* create(int cap)
 {
 	struct queue *q1 = (struct queue*)calloc(1, sizeof(struct queue));
