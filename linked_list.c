@@ -1,174 +1,290 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-int i;
+#include <stdio.h>
+#include <stdlib.h>
 
 struct Node
 {
-	int data;
-	struct Node *next;
+    int data;
+    struct Node *next;
 };
 
-void traversal(struct Node *n)
+struct Node* create()
 {
-	while(n != NULL)
-	{
-		printf("Data of %d node is %d and address of next is %d\n", i+1, n->data, n->next);
-		i++;
-		n = n->next;
-	}
-	i=0;
+	struct Node* head = (struct Node*)calloc(1, sizeof(struct Node));
+	head = NULL;
+
+	return head;
 }
 
-void push_head(struct Node **head_ref, int new_data)
+void prepend(struct Node **head_ref, int x)
 {
-	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
-	new_node->data = new_data;
-	new_node->next = *head_ref;
-	*head_ref = new_node;
+    struct Node *temp = (struct Node*)calloc(1, sizeof(struct Node));
+    temp->data = x;
+    temp->next = *head_ref;
+    *head_ref = temp; 
 }
 
-void append(struct Node **head_ref, int new_data)
+void append(struct Node **head_ref, int x)
 {
-	struct Node *last = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *temp = (struct Node*)calloc(1, sizeof(struct Node));
+    temp->data = x;
+    temp->next = NULL;
 
-	last->data = new_data;
-	last->next = NULL;
+    struct Node *trav = (struct Node*)calloc(1, sizeof(struct Node));
+    trav = *head_ref;
 
-	struct Node *traverse = (struct Node*)malloc(sizeof(struct Node));
-	traverse = *head_ref;
+    if(*head_ref ==  NULL)
+        *head_ref = temp;
 
-	if (*head_ref == NULL)
-	{	
-		*head_ref = last;
-		return;
-	}
+    else
+    {
+        while(trav->next != NULL)
+        {
+            trav = trav->next;
 
-	while(traverse->next != NULL)
-		traverse = traverse->next;
-
-	traverse->next = last;
-	return;
+        }
+        trav->next = temp;    
+    }
 }
 
-void insert_after(struct Node* prev_node, int new_data)
+void insert(struct Node **head_ref, int dat, int prev_data)
 {
-	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *temp = (struct Node*)calloc(1, sizeof(struct Node));
+    temp->data = dat;
 
-	new_node->data = new_data;
-	new_node->next = prev_node->next;
-	prev_node->next = new_node;
+    struct Node *trav = (struct Node*)calloc(1, sizeof(struct Node));
+    struct Node *prev = (struct Node*)calloc(1, sizeof(struct Node));
+    trav = *head_ref;
 
-	return;
+    while(trav->data != dat)
+    {
+        trav = trav->next;
+    }
+    temp->next = trav->next;
+    trav->next = temp;  
 }
 
-void delete_node(struct Node **head_ref, int position)
+void traverse(struct Node *head_ref)
 {
-	int count=0;
-	struct Node *traverse = (struct Node*)malloc(sizeof(struct Node));
-	traverse = *head_ref;
+    struct Node *temp;
+    temp = head_ref;
 
-	if(position == 0)
-	{
-		*head_ref = traverse->next;
-		free(traverse);
-	}
-
-	while(count != position-2)
-	{
-		traverse = traverse->next;
-		count++;
-	}
-
-	if(traverse->next == NULL)
-	{
-		printf("ERROR!! Position given is more than dimension of the linked list\n");
-		exit(0);
-	}
-
-	traverse->next = traverse->next->next;
-
-	return;
+    printf("\n\n");
+    while(temp != NULL)
+    {
+        printf("%d\t", temp->data);
+        temp = temp->next;
+    }
+    printf("\n\n");
 }
 
-int length_iter(struct Node **head_ref)
+void search(struct Node **head_ref, int to_search)
 {
-	int count=0;
-	struct Node *n = (struct Node*)malloc(sizeof(struct Node));
-	n = *head_ref;
+    struct Node *temp;
+    temp = *head_ref;
 
-	while(n != NULL)
-	{
-		n = n->next;
-		count++;
-	}
-
-	return count;
+    while(temp->data != to_search)
+    {
+        if(temp == NULL)
+            break;
+        temp = temp->next;
+    }
+    if(temp->data == to_search)
+        printf("Match found\n");
+    else
+        printf("OOPS!! No match\n");
 }
 
-int length_rec(struct Node *head_ref)
+void item_count(struct Node **head_ref)
 {
-	if(head_ref == NULL)
-		return 0;
+    struct Node *temp;
+    temp = *head_ref;
 
-	return 1 + length_rec(head_ref->next);
+    int count = 1;
+    if(*head_ref == NULL)
+        printf("Number of items in Linked list are NONE\n");
+    else
+    {
+        while(temp->next != NULL)
+        {
+            temp = temp->next;
+            count++;
+        }    
+        printf("Number of items in Linked list are %d\n", count);
+    }
 }
 
-void swap_nodes(struct Node **head_ref, int data1, int data2)
+void delete(struct Node **head_ref, int to_del)
 {
-	struct Node *pos1 = (struct Node*)malloc(sizeof(struct Node));
-	pos1 = *head_ref;
-	struct Node *pos2 = (struct Node*)malloc(sizeof(struct Node));
-	pos2 = *head_ref;
+    struct Node *temp;
+    struct Node *prev;
+    temp = *head_ref;
 
-	while(pos1->data!=data1)
-		pos1 = pos1->next;
+    if(*head_ref == NULL)
+        printf("There are no elements to be deleted\n");
+    else
+    {
+        while(temp->data != to_del)
+        {
+            if(temp == NULL)
+                break;
+            prev = temp;
+            temp = temp->next;
+        }
+        if(temp->data == to_del)
+        {
+            prev->next = temp->next;
+            free(temp);
+        }
+        else
+        {
+            printf("Node with value %d does not exist here\n", to_del);
+        }
+    }
+}
 
-	while(pos2->data!=data2)
-		pos2 = pos2->next;
+void swap(struct Node **head_ref, int f_val, int l_val)
+{
+    struct Node *temp;
+    temp = *head_ref;
 
-	printf("THE DATA IS %d\n", pos1->data);
-	pos1->data = pos1->data + pos2->data;
-	pos2->data = pos1->data - pos2->data;
-	pos1->data = pos1->data - pos2->data;
+    int flag = 0;
+    if(*head_ref ==  NULL)
+    {
+        printf("There is nothing to be swapped you fool!!!\n");
+        return;
+    }
 
-	return;
+    else
+    {
+        while(temp != NULL)
+        {
+            if(temp->data == f_val)
+            {
+                temp->data = l_val;
+                flag++;
+            }
+            else if(temp->data == l_val)
+            {
+                temp->data = f_val;
+                flag++;
+            }
+            else if(flag == 2)
+                break;
+            temp = temp->next;
+        }
+    }
+}
+
+void reverse(struct Node **head_ref)
+{
+
+    if(*head_ref == NULL)
+    	return;
+
+    struct Node *first;
+    struct Node *rest;
+
+    first = *head_ref;
+    rest = first->next;
+
+    if(rest == NULL)
+    	return;
+
+    reverse(&rest);
+
+    first->next->next = first;
+    first->next = NULL;
+
+    *head_ref = rest;
+}
+
+void controller(struct Node **head)
+{
+    printf("Welcome to Linked list demonstration\n");
+    while(1)
+    {
+        printf("**********MENU***********\n");
+        printf("\t Press 1 for prepend\n\t Press 2 to append\n\t Press 3 to insert at given position\n\t Press 4 to traverse\n\t Press 5 to search\n\t Press 6 to print number of items\n\t Press 7 to delete node\n\t Press 8 to swap  nodes\n\t Press 9 to Reverse the linked list\n\tPress 10 to exit\n");
+        int x;
+        scanf("%d", &x);
+        switch(x)
+        {
+            case 1: printf("Enter the number to prepend\n");
+                    int to_prep;
+                    scanf("%d", &to_prep);
+                    prepend(head, to_prep);
+                    break;
+            case 2: printf("Enter the number to append\n");
+                    int to_apn;
+                    scanf("%d", &to_apn);
+                    append(head, to_apn);
+                    break;
+            case 3: printf("Enter the number to insert\n");
+                    int to_insrt;
+                    scanf("%d", &to_insrt);
+                    printf("Enter the element value to be inserted after\n");
+                    int ind;
+                    scanf("%d", &ind);
+                    insert(head, to_insrt, ind);
+                    break;
+            case 4: traverse(*head);
+                    break;
+            case 5: printf("Enter the number to be searched\n");
+                    int to_sear;
+                    scanf("%d", &to_sear);
+                    search(head, to_sear);
+                    break;
+            case 6: item_count(head);
+                    break;
+            case 7: printf("Enter the data to be deleted\n");
+                    int data;
+                    scanf("%d", &data);
+                    delete(head, data);
+                    break;
+            case 8: printf("Enter value of first node to be swapped\n");
+                    int f_ind;
+                    scanf("%d", &f_ind);
+                    printf("Enter the value of second node to be swapped\n");
+                    int l_ind;
+                    scanf("%d", &l_ind);
+                    swap(head, f_ind, l_ind);
+                    break;
+            case 9: reverse(head);
+                    break;
+            case 10: exit(0);
+            default: printf("You entered a wrong choice\n");
+        }
+    }
+}
+
+void dispose(struct Node **head_ref)
+{
+    struct Node *temp;
+    struct Node *current;
+
+    temp = *head_ref;
+
+    if(*head_ref == NULL)
+        return;
+    else
+    {
+        while(temp != NULL)
+        {
+            current = temp;
+            temp = temp->next;
+            free(current);
+
+        }
+    }
 }
 
 int main()
 {
-	struct Node* head = NULL;
-	struct Node* second = NULL;
-	struct Node* third = NULL;
+    struct Node *head = create();
 
-	head = (struct Node*)malloc(sizeof(struct Node));
-	second = (struct Node*)malloc(sizeof(struct Node));
-	third = (struct Node*)malloc(sizeof(struct Node));
+    controller(&head);
 
-	head->data = 1;
-	head->next = second;
+    dispose(&head);     // free all the memory
 
-	second->data = 211;
-	second->next = third;
-
-	third->data = 3;
-	third->next = NULL;
-
-	push_head(&head, 100);
-	append(&head, 200);
-	insert_after(head->next, 300);
-//	delete_node(&head, 5);
-	traversal(head);
-	swap_nodes(&head, 100, 200);
-	traversal(head);
-
-	int len_iter = length_iter(&head);
-	int len = length_rec(head);
-	printf("Length of linked list is %d or %d\n", len, len_iter);
-
-	free(head);
-	free(second);
-	free(third);
-
-	return 0;
-} 
+    return 0;
+}
