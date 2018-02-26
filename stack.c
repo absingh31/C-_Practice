@@ -73,12 +73,13 @@ void display(struct stack *s1)
 
 void controller(struct stack *s1)
 {
-	printf("\tWelcome to stack controller\n");
+	printf("\nWelcome to stack demonstration\n");
+	printf("\n\n*********Menu**********\n");
+	printf("1. To push enter 1\n2. To pop enter 2\n3. To display enter 3\n4. To exit enter 4\n");	
 	while(1)
 	{
-		printf("\n\n\t*********Menu**********\n");
-		printf("\tTo push enter 1\n\tTo pop enter 2\n\tTo display enter 3\n\tTo exit enter 4\n");
 		int choice;
+		printf("\nEnter your choice: ");
 		scanf("%d", &choice);
 		switch(choice)
 		{

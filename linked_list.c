@@ -68,13 +68,12 @@ void traverse(struct Node *head_ref)
     struct Node *temp;
     temp = head_ref;
 
-    printf("\n\n");
     while(temp != NULL)
     {
         printf("%d\t", temp->data);
         temp = temp->next;
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 void search(struct Node **head_ref, int to_search)
@@ -177,35 +176,67 @@ void swap(struct Node **head_ref, int f_val, int l_val)
 
 void reverse(struct Node **head_ref)
 {
+	if(*head_ref == NULL)
+		return;
+	
+	struct Node *first;
+	struct Node *rest;
 
-    if(*head_ref == NULL)
-    	return;
+	first = *head_ref;
+	rest = first->next;
 
-    struct Node *first;
-    struct Node *rest;
+	if(rest == NULL)
+		return;
+	
+	reverse(&rest);
+	
+	first->next->next = first;
+	first->next = NULL;
 
-    first = *head_ref;
-    rest = first->next;
+	*head_ref = rest;
+}
 
-    if(rest == NULL)
-    	return;
+void rotate(struct Node **head_ref, int k)
+{
+	if(k==0)
+		return;
 
-    reverse(&rest);
+	struct Node *current;
+	current = *head_ref;
 
-    first->next->next = first;
-    first->next = NULL;
+	int count = 1;
+	while(count < k && current!=NULL)
+	{
+		current=current->next;
+		count++;
+	}
 
-    *head_ref = rest;
+	if(current == NULL)
+		return;
+
+	struct Node *kthnode;
+	kthnode = current;
+
+	while(current->next != NULL)
+	{
+		current = current->next;
+	}
+
+	current->next = *head_ref;
+	*head_ref = kthnode->next;
+	kthnode->next = NULL;
 }
 
 void controller(struct Node **head)
 {
-    printf("Welcome to Linked list demonstration\n");
+    printf("\nWelcome to Linked list demonstration\n");
+    printf("**********MENU***********\n");
+    printf("1. Press 1 for prepend\n2. Press 2 to append\n3. Press 3 to insert at given position\n4. Press 4 to traverse\n5. Press 5 to search\n6. Press 6 to print number of items\n7. Press 7 to delete node\n8. Press 8 to swap  nodes\n9. Press 9 to Reverse the linked list\n10.Press 10 to exit\n");
+
     while(1)
     {
-        printf("**********MENU***********\n");
-        printf("\t Press 1 for prepend\n\t Press 2 to append\n\t Press 3 to insert at given position\n\t Press 4 to traverse\n\t Press 5 to search\n\t Press 6 to print number of items\n\t Press 7 to delete node\n\t Press 8 to swap  nodes\n\t Press 9 to Reverse the linked list\n\tPress 10 to exit\n");
         int x;
+        printf("\nEnter your choice: ");
         scanf("%d", &x);
         switch(x)
         {

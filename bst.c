@@ -18,23 +18,24 @@ struct Node* GetNewNode(int data)
 	return newNode;
 }
 
-struct Node* insert(struct Node **root, int data)
+void insert(struct Node **root, int data)
 {
-	if(root == NULL)
+	if(*root == NULL)
 	{
-		root = GetNewNode(data);
-		return root;
+		*root = GetNewNode(data);
+		return;
 	} 
+	struct Node *temp;
+	temp = *root;
 
-	if(data < (root->data))
+	if(data < (temp->data))
 	{
-		root->left = insert(root->left, data);
+		insert(&temp->left, data);
 	}
 	else
 	{
-		root->right = insert(root->right, data);
+		insert(&temp->right, data);
 	}
-	return root;
 }
 
 struct Node* search(struct Node *root, int to_search)
@@ -49,7 +50,7 @@ struct Node* search(struct Node *root, int to_search)
 		return search(root->left, to_search);
 }
 
-void inorder(struct Node **root)
+void inorder(struct Node *root)
 {
 	if(root == NULL)
 		return;
@@ -64,7 +65,7 @@ void preorder(struct Node *root)
 	if(root == NULL)
 		return;
 
-	printf("%d\t", temp->data);
+	printf("%d\t", root->data);
 	preorder(root->left);
 	preorder(root->right);
 }
@@ -98,39 +99,27 @@ int height(struct Node *root)
 	}
 }
 
-void printGivenLevel(struct Node **root, int level)
+void printGivenLevel(struct Node *root, int level)
 {
-	if(*root == NULL)
+	if(root == NULL)
 		return;
 
-	if(level < 1)
-		{printf("OOPS! Level starts with 1\n"); return;}
-	struct Node *temp;
-	temp = *root;
-
 	if(level == 1)
-		printf("%d\n", temp->data);
+		printf("%d\n", root->data);
 	else if(level > 1)
 	{
-		printGivenLevel(&temp->left, level-1);
-		printGivenLevel(&temp->right, level-1);
+		printGivenLevel(root->left, level-1);
+		printGivenLevel(root->right, level-1);
 	}
 }
 
-void levelorder(struct Node **root)
+void levelorder(struct Node *root)
 {
-	if(*root == NULL)
-		return;
+	int h = height(root);
 
-	struct Node *temp;
-	temp = *root;
-
-	int h = height(&temp);
-
-	for(int i=0; i<h; i++)
+	for(int i=0; i<=h; i++)
 	{
-		printf("%d\t", temp->data);
-		printGivenLevel(&temp, i);
+		printGivenLevel(root, i);
 	}
 }
 
@@ -184,20 +173,18 @@ struct Node* delete(struct Node *root, int to_delete)
 	{
 		if(root->left == NULL)
 		{
-			struct Node *new_node;
-			new_node = root->left;
+			struct Node *new_node = root->right;
 			free(root);
 			return new_node; 
 		}
 		else
 		{
-			struct Node *new_node;
-			new_node = root->right;
+			struct Node *new_node = root->left;
 			free(root);
 			return new_node;
 		}
 
-		struct Node *new_node = minValueNode(&temp->right);
+		struct Node *new_node = minValueNode(root->right);
 		root->data = new_node->data;
 		root->right = delete(root->right, new_node->data);
 	}
@@ -218,12 +205,13 @@ int countleaf(struct Node *root)
 
 void controller(struct Node **root)
 {
-	printf("Welcome to Binary Search Tree Demonstration\n");
+	printf("\nWelcome to Binary Search Tree Demonstration\n");
+	printf("**********MENU**********\n");
+	printf("\n1. Press 1 to insert data into binary tree\n2. Press 2 to search data\n3. Press 3 for inorder traversal\n4. Press 4 for preorder traversal\n5. Press 5 for postorder traversal\n6. Press 6 for levelorder traversal\n7. Press 7 to know the height\n8. Press 8 to print data in given level\n9. Press 9 to print the maximum value in tree\n10.press 10 to print minimum value in tree\n11.Press 11 to number of leaf nodes\n12.Press 12 to delete a node with given value\n13.Press 13 to exit\n");
 	while(1)
 	{
-		printf("**********MENU**********\n");
-		printf("\n\t Press 1 to insert data into binary tree\n\t Press 2 to search data\n\t Press 3 for inorder traversal\n\t Press 4 for preorder traversal\n\t Press 5 for postorder traversal\n\t Press 6 for levelorder traversal\n\t Press 7 to know the height\n\t Press 8 to print data in given level\n\t Press 9 to print the maximum value in tree\n\t press 10 to print minimum value in tree\n\t Press 11 to number of leaf nodes\n\t Press 12 to delete a node with given value\n\t Press 13 to exit\n");
 		int x;
+		printf("\nEnter your choice: ");
 		scanf("%d", &x);
 		switch(x)
 		{
@@ -235,44 +223,47 @@ void controller(struct Node **root)
 			case 2: printf("Enter value to be searched in binary tree\n");
 					int to_sear;
 					scanf("%d", &to_sear);
-					search(root, to_sear);
+					struct Node *sear = search(*root, to_sear);
+					if(sear->data == to_sear)
+						printf("Match found\n");
 					break;
-			case 3: inorder(root);
+			case 3: inorder(*root);
 					break;
-			case 4: preorder(root);
+			case 4: preorder(*root);
 					break;
-			case 5: postorder(root);
+			case 5: postorder(*root);
 					break;
-			case 6: levelorder(root);
+			case 6: levelorder(*root);
 					break;
 			case 7: printf("Height of the tree is ");
 					int h;
-					h = height(root);
+					h = height(*root);
 					printf("%d\n", h);
 					break;
 			case 8: printf("Enter the level number whose value you have to print\n");
 					int lev;
 					scanf("%d", &lev);
-					printGivenLevel(root, lev);
+					printGivenLevel(*root, lev);
 					break;
 			case 9: printf("Maximum value in the tree is \n");
 					struct Node *max;
-					max = maxValueNode(root);
+					max = maxValueNode(*root);
 					printf("%d\n", max->data);
 					break;
 			case 10:printf("Minimum value in the tree is \n");
 					struct Node *min;
-					min = minValueNode(root);
+					min = minValueNode(*root);
 					printf("%d\n", min->data);
 					break;
 			case 11:printf("Number of leaf nodes are \n");
-					int count = countleaf(root);
+					int count = countleaf(*root);
 					printf("%d\n", count);
 					break;
 			case 12:printf("Enter the data to be deleted\n");
 					int val;
 					scanf("%d", val);
-					delete(root, val);
+					struct Node *temp = *root;
+					temp = delete(*root, val);
 					break;
 			case 13: exit(0);
 			default: printf("OOPS!! you entered a wrong choice\n");
