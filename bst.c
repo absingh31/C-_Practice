@@ -203,6 +203,23 @@ int countleaf(struct Node *root)
 		return countleaf(root->left) + countleaf(root->right);
 }
 
+/*RANDOM QUESTIONS FUNCTIONS*/
+// PRINT NUMBERS BETWEEN THE GIVEN RANGE
+void printrange(struct Node *root, int start, int end)
+{
+	if(root == NULL)
+		return;
+
+	if(start<(root->data))
+		printrange(root->left, start, end);
+
+	if(start<(root->data) && end>(root->data))
+		printf("%d\n", root->data);
+
+	if(end>(root->data))
+		printrange(root->right, start, end);
+}
+
 void controller(struct Node **root)
 {
 	printf("\nWelcome to Binary Search Tree Demonstration\n");
@@ -266,6 +283,11 @@ void controller(struct Node **root)
 					temp = delete(*root, val);
 					break;
 			case 13: exit(0);
+			case 14: printf("Enter both the numbers\n");
+					 int s,e;
+					 scanf("%d\n%d", &s,&e);
+					 printrange(*root, s, e);
+					 break;
 			default: printf("OOPS!! you entered a wrong choice\n");
 		}	
 	}

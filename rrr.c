@@ -25,33 +25,37 @@ int prime(int number)
 
 int main()
 {
-	int num;
-	scanf("%d", &num);
-	int x = prime(num);
-	if(x == 2)
-		printf("Prime number\n");
-	else if(x == 1 || x<=0)
-		printf("Not Prime\n");
+	// int num;
+	// scanf("%d", &num);
+	// int x = prime(num);
+	// if(x == 2)
+	// 	printf("Prime number\n");
+	// else if(x == 1 || x<=0)
+	// 	printf("Not Prime\n");
 
-	int a[6] = {1,6,3,90,23,11};
+	// int a[6] = {1,6,3,90,23,11};
 
-	int temp, flag=0;
-	for (int i = 0; i < 6; ++i)
-	{
-		for (int j = 0; j < 6 - i - 1; ++j)
-		{
-			temp = a[j];
-			a[j]=a[j+1];
-			a[j+1] = temp;
-			flag=1;
-		}
-		if(!flag)
-			break;
-	}
+	// int temp, flag=0;
+	// for (int i = 0; i < 6; ++i)
+	// {
+	// 	for (int j = 0; j < 6 - i - 1; ++j)
+	// 	{
+	// 		temp = a[j];
+	// 		a[j]=a[j+1];
+	// 		a[j+1] = temp;
+	// 		flag=1;
+	// 	}
+	// 	if(!flag)
+	// 		break;
+	// }
 
-	for (int i = 0; i < 6; ++i)
-	{
-		printf("%d\n", a[i]);
-	}
+	// for (int i = 0; i < 6; ++i)
+	// {
+	// 	printf("%d\n", a[i]);
+	// }
+	int arr[] = {12,9,14};
+	int i=0;
+	arr[++i]=--i;
+	printf("%d %d %d\n",arr[1]);
 	return 0;
 }
