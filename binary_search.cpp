@@ -17,21 +17,21 @@ int binary_search(int arr[], int l, int r, int x)
 		else if(arr[mid]<x)
 			return binary_search(arr, mid+1, r, x);
 
-		else
-			return -1;
 	}
+
+	return -1;
 }
 
 int main()
 {
-	int arr = {2,4,12,34,65,123,456,500,625}
+	int arr[] = {2,4,12,34,65,123,456,500,625};
 	int x;
 
 	cout<<"Enter the element to search";
 
 	cin>>x;
 
-	int result = binary_search(arr, 0, len(arr)-1, x);
+	int result = binary_search(arr, 0, 9-1, x);
 
 	if(result == -1)
 		cout<<"Element asked for is not present"<<endl;
