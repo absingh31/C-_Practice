@@ -14,7 +14,7 @@ int main()
 	cout<<"Enter the number"<<endl;
 	cin>>num;
 
-	// TRAVERSE TILL HALF OF THE NUMBER
+	// TRAVERSE TILL HALF OF THE NUMBER, SAVES COMPUTATION
 	for (int i = 1; i < num/2; ++i)
 		if(num%i == 0 && num%2 != 0)
 			count++;
