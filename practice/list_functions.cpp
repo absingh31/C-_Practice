@@ -129,7 +129,7 @@ int main()
 	l1.splice(l1.begin(), l1, nit, l1.end());
 
 	//swap both the list by resizing them accordingly
-	l1.swap(l1);
+	l1.swap(l2);
 
 	list<int> li;
 	li.push_back(1); li.push_back(3); li.push_back(2); li.push_back(1);
