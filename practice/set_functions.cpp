@@ -1,7 +1,6 @@
 #include <iostream>
 #include <set>
 #include <list>
-#include <algorithm>
 
 using namespace std;
 
@@ -28,7 +27,9 @@ int main()
 
 	// return the iterator to element to be found or s1.end() otherwise
 	cout<<*(s1.find(3))<<endl;
-	//.begin(), .end(), .rbegin(), .rend(), .empty(), .clear()(deletes the whole set), .erase(), 	 
+
+
+	//.begin(), .end(), .rbegin(), .rend(), .empty(), .clear()(deletes the whole set), .erase()	 
 
 	cool_print(s1);	
 
