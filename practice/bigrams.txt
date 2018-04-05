@@ -1,0 +1,11 @@
++very good 5
+
++very great 7
+
+-very bad 5
+
+-bad luck 7
+
+-bad mood 6
+
++good mood 6

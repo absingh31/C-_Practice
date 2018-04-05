@@ -1,0 +1,11 @@
+-bad 5
+
+-worse 3
+
+-worst 6
+
++great 6
+
++good 5
+
++nice 3
